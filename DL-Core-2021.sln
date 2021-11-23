@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "DL-Core-2021", "DL-Core-2021.dtproj", "{37AA82E3-692C-43E3-ACC1-D67B7A7D62ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+		Staging|Default = Staging|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37AA82E3-692C-43E3-ACC1-D67B7A7D62ED}.Development|Default.ActiveCfg = Development
+		{37AA82E3-692C-43E3-ACC1-D67B7A7D62ED}.Development|Default.Build.0 = Development
+		{37AA82E3-692C-43E3-ACC1-D67B7A7D62ED}.Staging|Default.ActiveCfg = Development
+		{37AA82E3-692C-43E3-ACC1-D67B7A7D62ED}.Staging|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86DF40CB-7049-4A08-9D6A-D707FCDB4A78}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DTSConfiguration>
+  <DTSConfigurationHeading>
+    <DTSConfigurationFileInfo GeneratedBy="Envido" GeneratedFromPackageName="Envido-DL-New" GeneratedFromPackageID="{1CF066ED-D9B5-4EED-8952-2969302848B7}" GeneratedDate="19/11/2021 12:01:36 PM" />
+  </DTSConfigurationHeading>
+  <Configuration ConfiguredType="Property" Path="\Package.Connections[eNotificationOnHLT142SQL001].Properties[ConnectionString]" ValueType="String">
+    <ConfiguredValue>Data Source=HLT142SQL001;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=DataTools;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package.Connections[Envido-Core].Properties[ConnectionString]" ValueType="String">
+    <ConfiguredValue>Data Source=HLT439SQL014\Dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
+  </Configuration>
+  <Configuration ConfiguredType="Property" Path="\Package.Connections[Envido-DL].Properties[ConnectionString]" ValueType="String">
+    <ConfiguredValue>Data Source=HLT439SQL014\Dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido_dl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
+  </Configuration>
+</DTSConfiguration>

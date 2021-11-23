@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectInfo>
+    <Name>DL-Core-2021</Name>
+    <LastWriteTime>2021-11-16T13:14:34.7152178Z</LastWriteTime>
+    <LastKnownProtectionLevel>EncryptAllWithPassword</LastKnownProtectionLevel>
+    <Salt>Sagb+stI</Salt>
+    <LastKnownProtectedHashedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAn86N0i0oE02wgjfDYxQaPgAAAAACAAAAAAAQZgAAAAEAACAAAABF6srYwxxWARNQ9s2pmj2BMgeqZsMnykEsm52d+q2eOAAAAAAOgAAAAAIAACAAAABCiDRaU5eDe2wDkaQhix9ECNBkzoFMJ4jajGay2EPrRjAAAAAfl0Hycy3YC9czhQ4ToFr+vJrsLHmJ+XQkWb8gsrKP48PBACwg/U3fZQzcmKvXqXJAAAAAT65E5q4FfPy8Ot0q4qYl7g6JQYu8KWuK7mFCqAhqIPNZ4ge+xkpgLH/Jpghg6EwNf7xLdlGqXxj3LX3B+rJrzQ==</LastKnownProtectedHashedPassword>
+  </ProjectInfo>
+  <LastBuildInfos>
+    <ProjectBuildItemInfo>
+      <Name>DataUploadFromProvation.dtsx</Name>
+      <LastWriteTime>2021-11-16T12:57:12.673102Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithPassword</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>DataUploadForSAPCCOC.dtsx</Name>
+      <LastWriteTime>2021-11-16T13:14:34.6914362Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptAllWithPassword</LastKnownProtectionLevel>
+      <Salt>8k0joe34</Salt>
+      <LastKnownProtectedHashedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAn86N0i0oE02wgjfDYxQaPgAAAAACAAAAAAAQZgAAAAEAACAAAACwghsqEqF7oMzJX2kBPf5hz8vjgjJkbcFWX4SpYwDekAAAAAAOgAAAAAIAACAAAABH1wRrrCHt1vQVZrQPUf9b60ybyOv9WpCy7G306FuVmjAAAADguX6JGp9rc/UpIOxu6T1XijR+sTa8ZKHj0oylIuAQ+TMLh1UwEzFWsli3rlhzsXVAAAAA/5OqchviuH7RJmNeVbH2z8EhROB1TdT1yt+iQZfZaJtS7Tr6hYzdcetqDax5DyXO4Gpc9TQ935QGU4zHHUic+Q==</LastKnownProtectedHashedPassword>
+    </ProjectBuildItemInfo>
+  </LastBuildInfos>
+</BuildLog>
