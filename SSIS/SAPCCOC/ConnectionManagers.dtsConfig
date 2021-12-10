@@ -7,9 +7,9 @@
     <ConfiguredValue>Data Source=HLT142SQL001;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=DataTools;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
   </Configuration>
   <Configuration ConfiguredType="Property" Path="\Package.Connections[Envido-Core].Properties[ConnectionString]" ValueType="String">
-    <ConfiguredValue>Data Source=HLT439SQL014\Dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
+    <ConfiguredValue>Data Source=HLT439SQL014\dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
   </Configuration>
   <Configuration ConfiguredType="Property" Path="\Package.Connections[Envido-DL].Properties[ConnectionString]" ValueType="String">
-    <ConfiguredValue>Data Source=HLT439SQL014\Dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido_dl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
+    <ConfiguredValue>Data Source=HLT439SQL014\dev;User ID=SAPCC0C@dmin;Password=0vawsPOJc0FaOboI1uWp;Initial Catalog=envido_dl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
   </Configuration>
 </DTSConfiguration>

@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SSMS",
+    "\\SSMS\\Envido",
+    "\\SSMS\\Envido\\SA-PCCOC",
+    "\\SSMS\\Envido_DL",
+    "\\SSMS\\Envido_DL\\SA-PCCOC"
   ],
-  "SelectedNode": "\\DL-Core-2021.sln",
+  "SelectedNode": "\\SSMS\\Envido\\SA-PCCOC\\dbo.pr_LinkMasterBDM.sql",
   "PreviewInSolutionExplorer": false
 }

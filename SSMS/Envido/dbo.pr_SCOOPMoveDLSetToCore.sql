@@ -35,6 +35,7 @@ GO
 					01/09/2021	DJF		The Proximal/Distal scores had been swapped from PROC42 to PROC44 and vice versa
 					07/09/2021	DJF		Include all QuestionID's in tblAnswer not just the questions that you have data for
 					24/09/2021	DJF		DO a whole lot of initialisations for variables that get data from tblAnswersOptions
+					07/12/2021	DJF		Chnaged QueCode for DOB & date procedure done
 
 -- ========================================================================================*/
 
@@ -182,7 +183,7 @@ select @PreferredNameQuestionID = QuestionID from tblQuestion where SetID = @Des
 select @MiddleNameQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR6'
 select @MaidenNameQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR8'
 select @GenderQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR9'
-select @DateOfBirthQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR10'
+select @DateOfBirthQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'DOB'
 select @AgeQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR11'
 select @DeceasedQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR12'
 select @DateOfDeathQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR13'
@@ -356,7 +357,7 @@ declare @SurveillanceRecommendationCaseReviewDueDateQuestionID int
 select @RecallIntervalQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc1'
 select @DateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc2'
 select @PreviousDateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc3'
-select @DateProcedureDoneQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc4'
+select @DateProcedureDoneQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DateProcDone'
 select @ProcedureNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc5'
 select @DateReminderSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc6'
 select @ProcedureLocationQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc7'
