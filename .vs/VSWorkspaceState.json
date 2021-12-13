@@ -4,9 +4,8 @@
     "\\SSMS",
     "\\SSMS\\Envido",
     "\\SSMS\\Envido\\SA-PCCOC",
-    "\\SSMS\\Envido_DL",
-    "\\SSMS\\Envido_DL\\SA-PCCOC"
+    "\\SSMS\\Envido_DL"
   ],
-  "SelectedNode": "\\SSMS\\Envido\\SA-PCCOC\\dbo.pr_LinkMasterBDM.sql",
+  "SelectedNode": "\\SSMS\\Envido_DL\\dbo.pr_LinkWhichServer.sql",
   "PreviewInSolutionExplorer": false
 }

@@ -14,7 +14,7 @@ GO
 
 
 /*=========================================================================================
-    DESCRIPTION:	Create a new data linkage collection in envido_dl database
+    DESCRIPTION:	Create a new data linkage collection in envido_dl database based on the 
 					
     USE:            EXEC dbo.pr_LinkCreateEnvidoDLCollection
 					
@@ -32,8 +32,10 @@ BEGIN
 Declare @EnvironmentName nVarChar(max)
 exec pr_LinkWhichServer @EnvironmentName OUTPUT
 
+-- Define the specific details for this new data linkage collection being created
+
 -- ######################## Collection details ########################
-Declare @collectionname NVARCHAR(100) = 'BDM'
+Declare @CollectionName NVARCHAR(100) = 'BDM'
 Declare @Description NVARCHAR(800) = 'Births, Deaths and Marriages'
 Declare @Rationale NVARCHAR(800) = 'Data from Births, Deaths and Marriages'
 Declare @ToDate datetime = DATEADD(year, 1, getdate())
@@ -65,8 +67,10 @@ if (@EnvironmentName = 'Production')
 
 Declare @CollectionID int = 0
 -- Add in the collection details
-exec @CollectionID = uspCollection_Add @collectionname, @Description, @Rationale, @ToDate, @type, @addedby, @lastmodifiedby, @AccountID
-
+declare @tc table(CollectionID int)
+insert @tc
+	exec uspCollection_Add @CollectionName, @Description, @Rationale, @ToDate, @type, @addedby, @lastmodifiedby, @AccountID
+select @CollectionID = CollectionID from @tc
 
 -- ######################## tblSet details ########################
 Declare @setname nvarchar(100) = 'BDM'
@@ -77,8 +81,10 @@ Declare @AllowOnlyOne bit = 0
 
 Declare @SetID int = 0
 -- Add in the set details
-exec @SetID = uspSet_Add @setname, @collectionid, @parentsetId, @addedby, @lastmodifiedby, @AllowOnlyOne
-
+declare @ts table(SetID int)
+insert @ts
+	exec uspSet_Add @setname, @collectionid, @parentsetId, @addedby, @lastmodifiedby, @AllowOnlyOne
+select @SetID = SetID from @ts
 
 -- ######################## tblQuestion details ########################
 Declare @TableName nVarChar(max) = 'tblLinkStagingBDM'
@@ -129,31 +135,34 @@ OPEN InformationSchemaSearch
 FETCH NEXT FROM InformationSchemaSearch INTO @Column_Name, @Column_Type, @Column_Length
 WHILE @@FETCH_STATUS = 0  
 	BEGIN
-	if (@Column_Length is null)
-		print @Column_Name + ', ' + @Column_Type + ', null'
-	else
-		print @Column_Name + ', ' + @Column_Type + ', ' + @Column_Length
+	if (@Column_Name != 'AnswerSetID')
+		begin
+		if (@Column_Length is null)
+			print @Column_Name + ', ' + @Column_Type + ', null'
+		else
+			print @Column_Name + ', ' + @Column_Type + ', ' + @Column_Length
 
-	if (@Column_Type = 'int') set @questionTypeid = 7			-- Number
-	if (@Column_Type = 'nvarchar') set @questionTypeid = 5		-- Text box
-	if (@Column_Type = 'date') set @questionTypeid = 9			-- Date
-	if (@Column_Type = 'smalldatetime') set @questionTypeid = 9	-- Date
+		if (@Column_Type = 'int') set @questionTypeid = 7			-- Number
+		if (@Column_Type = 'nvarchar') set @questionTypeid = 5		-- Text box
+		if (@Column_Type = 'date') set @questionTypeid = 9			-- Date
+		if (@Column_Type = 'smalldatetime') set @questionTypeid = 9	-- Date
 
-	set @sequence = @sequence + 2
+		set @sequence = @sequence + 2
 
-	set @quecode = REPLACE(REPLACE(@Column_Name, ' ', ''), '-','')
-	if (LEN(@quecode) > 50) set @quecode = SUBSTRING(@quecode, 1, 50)
+		set @quecode = REPLACE(REPLACE(@Column_Name, ' ', ''), '-','')
+		if (LEN(@quecode) > 50) set @quecode = SUBSTRING(@quecode, 1, 50)
 
-	if (@questionTypeID = 5)
-		BEGIN
-		set @validation = 'MaxLength'
-		set @value1 = @Column_Length
-		END
+		if (@questionTypeID = 5)
+			BEGIN
+			set @validation = 'MaxLength'
+			set @value1 = @Column_Length
+			END
 
-	exec uspQuestion_Add @Column_Name, @questionTypeid, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
-						 @validation, @value1, @value2, @IsDisplayInTable, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
-						 @ConQuestionTypeID, @DateConditionOperator, @SSRSReportID, @Format, @IsNumericOptions, @CalculationType, @Interval, @DisplayOnLightBox,
-						 @ValidForCurrentDate, @Rationale, @IsComplianceReport, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
+		exec uspQuestion_Add @Column_Name, @questionTypeid, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
+							 @validation, @value1, @value2, @IsDisplayInTable, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
+							 @ConQuestionTypeID, @DateConditionOperator, @SSRSReportID, @Format, @IsNumericOptions, @CalculationType, @Interval, @DisplayOnLightBox,
+							 @ValidForCurrentDate, @Rationale, @IsComplianceReport, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
+		end
 
 	FETCH NEXT FROM InformationSchemaSearch INTO @Column_Name, @Column_Type, @Column_Length
 	END  
@@ -161,4 +170,9 @@ WHILE @@FETCH_STATUS = 0
 CLOSE InformationSchemaSearch
 DEALLOCATE InformationSchemaSearch
 
+-- Add in the ProcessedFlag
+exec uspQuestion_Add 'ProcessedFlag', 1, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
+					 @validation, '', '', 1, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
+					 @ConQuestionTypeID, @DateConditionOperator, @SSRSReportID, @Format, @IsNumericOptions, @CalculationType, @Interval, @DisplayOnLightBox,
+					 @ValidForCurrentDate, @Rationale, @IsComplianceReport, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
 END			 
