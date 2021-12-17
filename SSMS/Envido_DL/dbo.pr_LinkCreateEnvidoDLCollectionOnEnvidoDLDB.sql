@@ -1,8 +1,8 @@
 USE envido_dl 
 
 
-IF EXISTS (select * FROM sys.objects WHERE type = 'P' AND name = 'pr_LinkCreateEnvidoDLCollection')
-DROP PROCEDURE [pr_LinkCreateEnvidoDLCollection]
+IF EXISTS (select * FROM sys.objects WHERE type = 'P' AND name = 'pr_LinkCreateEnvidoDLCollectionOnEnvidoDLDB')
+DROP PROCEDURE [pr_LinkCreateEnvidoDLCollectionOnEnvidoDLDB]
 GO 
 
 SET NOCOUNT ON
@@ -14,9 +14,9 @@ GO
 
 
 /*=========================================================================================
-    DESCRIPTION:	Create a new data linkage collection in envido_dl database based on the 
+    DESCRIPTION:	This creates a new DL collection in the envido_dl database
 					
-    USE:            EXEC dbo.pr_LinkCreateEnvidoDLCollection
+    USE:            EXEC dbo.pr_LinkCreateEnvidoDLCollectionOnEnvidoDLDB
 					
     REVISIONS:		10/12/2021	DJF			Created
 
@@ -24,56 +24,32 @@ GO
    ========================================================================================*/
 
 
-CREATE PROCEDURE [dbo].[pr_LinkCreateEnvidoDLCollection] 
-	
+CREATE PROCEDURE [dbo].[pr_LinkCreateEnvidoDLCollectionOnEnvidoDLDB] 
+	@CollectionName NVARCHAR(100),
+	@CollectionDescription NVARCHAR(800),
+	@CollectionRationale NVARCHAR(800),
+	@ToDate datetime,
+	@type smallint,
+	@addedby int,
+	@lastmodifiedby int,
+	@AccountID varchar(100),
+	@setname nvarchar(100),
+	@tblLinkStagingName nVarChar(max),
+	@Debug int = 0,
+	@NewCollectionID int OUTPUT,
+	@NewSetID int OUTPUT
 AS
 BEGIN
-
-Declare @EnvironmentName nVarChar(max)
-exec pr_LinkWhichServer @EnvironmentName OUTPUT
-
--- Define the specific details for this new data linkage collection being created
-
--- ######################## Collection details ########################
-Declare @CollectionName NVARCHAR(100) = 'BDM'
-Declare @Description NVARCHAR(800) = 'Births, Deaths and Marriages'
-Declare @Rationale NVARCHAR(800) = 'Data from Births, Deaths and Marriages'
-Declare @ToDate datetime = DATEADD(year, 1, getdate())
-Declare @type smallint = 0
-Declare @addedby int
-Declare @lastmodifiedby int
-Declare @AccountID varchar(100)
-
-if (@EnvironmentName = 'Development')
-	BEGIN
-	set @addedby = 1
-	set @lastmodifiedby = 1
-	set @AccountID = '2344886c-6d2f-443a-abee-93a31d83987b'
-	END
-
-if (@EnvironmentName = 'Staging')
-	BEGIN
-	set @addedby = 1
-	set @lastmodifiedby = 1
-	set @AccountID = '2344886c-6d2f-443a-abee-93a31d83987b'
-	END
-
-if (@EnvironmentName = 'Production')
-	BEGIN
-	set @addedby = 1
-	set @lastmodifiedby = 1
-	set @AccountID = '2344886c-6d2f-443a-abee-93a31d83987b'
-	END
 
 Declare @CollectionID int = 0
 -- Add in the collection details
 declare @tc table(CollectionID int)
 insert @tc
-	exec uspCollection_Add @CollectionName, @Description, @Rationale, @ToDate, @type, @addedby, @lastmodifiedby, @AccountID
+	exec uspCollection_Add @CollectionName, @CollectionDescription, @CollectionRationale, @ToDate, @type, @addedby, @lastmodifiedby, @AccountID
 select @CollectionID = CollectionID from @tc
+set @NewCollectionID = @CollectionID
 
--- ######################## tblSet details ########################
-Declare @setname nvarchar(100) = 'BDM'
+-- tblSet details
 Declare @parentsetId int = null
 set @addedby = 1			-- Previously declared
 set @lastmodifiedby = 1		-- Previously declared
@@ -85,9 +61,9 @@ declare @ts table(SetID int)
 insert @ts
 	exec uspSet_Add @setname, @collectionid, @parentsetId, @addedby, @lastmodifiedby, @AllowOnlyOne
 select @SetID = SetID from @ts
+set @NewSetID = @SetID
 
--- ######################## tblQuestion details ########################
-Declare @TableName nVarChar(max) = 'tblLinkStagingBDM'
+-- tblQuestion details
 Declare @Column_Name nVarChar(max) = ''
 Declare @Column_Type nVarChar(max) = ''
 Declare @Column_Length nVarChar(max) = ''
@@ -130,7 +106,7 @@ Declare @IsInline bit = 0
 Declare @IsQuestionOnly bit = 0
 Declare @IsInlineNew varchar(5) = null
 
-DECLARE InformationSchemaSearch CURSOR FOR select column_name, data_type, character_maximum_length from INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @TableName
+DECLARE InformationSchemaSearch CURSOR FOR select column_name, data_type, character_maximum_length from INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @tblLinkStagingName
 OPEN InformationSchemaSearch
 FETCH NEXT FROM InformationSchemaSearch INTO @Column_Name, @Column_Type, @Column_Length
 WHILE @@FETCH_STATUS = 0  
@@ -157,6 +133,12 @@ WHILE @@FETCH_STATUS = 0
 			set @validation = 'MaxLength'
 			set @value1 = @Column_Length
 			END
+		else
+			BEGIN
+			set @validation = ''
+			set @value1 = ''
+			END
+
 
 		exec uspQuestion_Add @Column_Name, @questionTypeid, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
 							 @validation, @value1, @value2, @IsDisplayInTable, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
@@ -171,8 +153,10 @@ CLOSE InformationSchemaSearch
 DEALLOCATE InformationSchemaSearch
 
 -- Add in the ProcessedFlag
-exec uspQuestion_Add 'ProcessedFlag', 1, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
-					 @validation, '', '', 1, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
+exec uspQuestion_Add 'ProcessedFlag', 1, @setid, @defaultvalue, @sequence, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, 'ProcessedFlag',
+					 '', '', '', 1, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
 					 @ConQuestionTypeID, @DateConditionOperator, @SSRSReportID, @Format, @IsNumericOptions, @CalculationType, @Interval, @DisplayOnLightBox,
 					 @ValidForCurrentDate, @Rationale, @IsComplianceReport, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
+
+
 END			 

@@ -3,9 +3,8 @@
     "",
     "\\SSMS",
     "\\SSMS\\Envido",
-    "\\SSMS\\Envido\\SA-PCCOC",
     "\\SSMS\\Envido_DL"
   ],
-  "SelectedNode": "\\SSMS\\Envido_DL\\dbo.pr_LinkWhichServer.sql",
+  "SelectedNode": "\\SSMS\\Envido\\dbo.pr_LinkCreateEnvidoDLCollectionOnEnvidoDB.sql",
   "PreviewInSolutionExplorer": false
 }
