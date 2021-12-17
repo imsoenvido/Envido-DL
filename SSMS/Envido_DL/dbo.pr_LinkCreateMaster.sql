@@ -285,11 +285,11 @@ select @SourceDestMedicareQuestionID = QuestionID from envido.dbo.tblQuestion wh
 select @SourceDestMatchScoreQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @SourceSetID and QueCode = 'DestMatchScore'
 select @SourceDestMatchFlagQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @SourceSetID and QueCode = 'DestMatchFlag'
 
-select DestAnswerSetIDQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'DestAnswerSetId'
+select @DestAnswerSetIDQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @SourceSetID and QueCode = 'DestAnswerSetId'
 select @DestFirstNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'FIRSTNAME'
 select @DestMiddleNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'OTHERNAMES'
 select @DestLastNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'SURNAME'
-set @DestGenderQuestionID = null
+set @DestGenderQuestionID = 0																											-- No gender in SA-PCCOC as it only contains males, but cannot set it to null
 select @DestDOBQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'BIRTHDATE'
 select @DestMedicareQuestionID = QuestionID from envido.dbo.tblQuestion where setId = 2 and QueCode = 'IdValue'							-- For SA-PCCOC. Set 2 is the Patient - IDs set
 
@@ -297,14 +297,14 @@ select @StatusQuestionID = QuestionID from envido.dbo.tblQuestion where setId = 
 
 
 INSERT INTO envido.dbo.tblCoreDLSetMatching
-           ([MatchDescription], [DefaultUserID], [SourceDatabase], [SourceAccountID],
+           ([ID], [MatchDescription], [DefaultUserID], [SourceDatabase], [SourceAccountID],
             [SourceCollectionID], [SourceSetID], [SourceFirstNameQuestionID], [SourceMiddleNameQuestionID], [SourceLastNameQuestionID], [SourceDefaultGender], [SourceGenderQuestionID], [SourceDOBQuestionID], [SourceMedicareQuestionID],
             [SourceDestFirstNameQuestionID], [SourceDestMiddleNameQuestionID], [SourceDestLastNameQuestionID], [SourceDestDefaultGender], [SourceDestGenderQuestionID], [SourceDestDOBQuestionID], [SourceDestMedicareQuestionID], [SourceDestMatchScoreQuestionID], [SourceDestMatchFlagQuestionID],
 			[DestDatabase], [DestAccountID], [DestGroupID],
 			[DestCollectionID], [DestSetID], [DestAnswerSetIDQuestionID], [DestFirstNameQuestionID], [DestMiddleNameQuestionID], [DestLastNameQuestionID], [DestDefaultGender], [DestGenderQuestionID], [DestDOBQuestionID], [DestMedicareQuestionID],
 			[StatusQuestionID], [ActionSP])
      VALUES
-           ('DataLinkage-SA-PCCOC-BDM', @DefaultUserIDEnvidoDL, 'envido', @AccountIDEnvidoDLOnEnvidoDB, 
+           (2, 'DataLinkage-SA-PCCOC-BDM', @DefaultUserIDEnvidoDL, 'envido', @AccountIDEnvidoDLOnEnvidoDB, 
 			@SourceCollectionID, @SourceSetID, @SourceFirstNameQuestionID, @SourceMiddleNameQuestionID, @SourceLastNameQuestionID, @SourceDefaultGender, @SourceGenderQuestionID, @SourceDOBQuestionID, @SourceMedicareQuestionID,
 			@SourceDestFirstNameQuestionID, @SourceDestMiddleNameQuestionID, @SourceDestLastNameQuestionID, @SourceDestDefaultGender, @SourceDestGenderQuestionID, @SourceDestDOBQuestionID, @SourceDestMedicareQuestionID, @SourceDestMatchScoreQuestionID, @SourceDestMatchFlagQuestionID,
 			'envido', @AccountIDEnvidoOnEnvidoDB, @DefaultGroupIDEnvidoDLOnEnvido,
