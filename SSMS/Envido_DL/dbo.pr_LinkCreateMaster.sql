@@ -164,13 +164,12 @@ print 'STEP 4 - Create a new records in tblLinkImportMappingFields'
 
 -- **** Step 4A - populate tblLinkImportMappingFields for envido_dl
 
-set @sequence = 0
 Declare @QuestionID int
 Declare @QuestionText nVarChar(max)
-Declare @sequence int
+Declare @sequence int = 0
 Declare @questionTypeID int
 
-DECLARE tblQuestionEnvidoDLSearch CURSOR FOR select QuestionID, QuestionText, sequence, questionTypeID from tblQuestion WHERE collectionID = @NewCollectionIDOnEnvidoDL and SetID = @NewSetIDOnEnvidoDL
+DECLARE tblQuestionEnvidoDLSearch CURSOR FOR select QuestionID, QuestionText, sequence, questionTypeID from tblQuestion WHERE SetID = @NewSetIDOnEnvidoDL order by sequence
 OPEN tblQuestionEnvidoDLSearch
 FETCH NEXT FROM tblQuestionEnvidoDLSearch INTO @QuestionID, @QuestionText, @sequence, @questionTypeID
 WHILE @@FETCH_STATUS = 0  
@@ -214,7 +213,7 @@ if (@NewEventType = 1)
 	END
 ELSE
 	BEGIN
-	DECLARE tblQuestionEnvidoSearch CURSOR FOR select QuestionID, QuestionText, sequence, questionTypeID from envido.dbo.tblQuestion WHERE SetID = 470
+	DECLARE tblQuestionEnvidoSearch CURSOR FOR select QuestionID, QuestionText, sequence, questionTypeID from envido.dbo.tblQuestion WHERE SetID = 470 order by sequence
 	OPEN tblQuestionEnvidoSearch
 	FETCH NEXT FROM tblQuestionEnvidoDLSearch INTO @QuestionID, @QuestionText, @sequence, @questionTypeID
 	WHILE @@FETCH_STATUS = 0  
@@ -260,8 +259,6 @@ Declare @SourceDestMedicareQuestionID int
 Declare @SourceDestMatchScoreQuestionID int
 Declare @SourceDestMatchFlagQuestionID int
 
-Declare @DestCollectionID int
-Declare @DestSetID int
 Declare @DestAnswerSetIDQuestionID int
 Declare @DestFirstNameQuestionID int
 Declare @DestMiddleNameQuestionID int
@@ -288,6 +285,7 @@ select @SourceDestMedicareQuestionID = QuestionID from envido.dbo.tblQuestion wh
 select @SourceDestMatchScoreQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @SourceSetID and QueCode = 'DestMatchScore'
 select @SourceDestMatchFlagQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @SourceSetID and QueCode = 'DestMatchFlag'
 
+select DestAnswerSetIDQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'DestAnswerSetId'
 select @DestFirstNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'FIRSTNAME'
 select @DestMiddleNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'OTHERNAMES'
 select @DestLastNameQuestionID = QuestionID from envido.dbo.tblQuestion where setId = @DestSetID and QueCode = 'SURNAME'
@@ -310,6 +308,6 @@ INSERT INTO envido.dbo.tblCoreDLSetMatching
 			@SourceCollectionID, @SourceSetID, @SourceFirstNameQuestionID, @SourceMiddleNameQuestionID, @SourceLastNameQuestionID, @SourceDefaultGender, @SourceGenderQuestionID, @SourceDOBQuestionID, @SourceMedicareQuestionID,
 			@SourceDestFirstNameQuestionID, @SourceDestMiddleNameQuestionID, @SourceDestLastNameQuestionID, @SourceDestDefaultGender, @SourceDestGenderQuestionID, @SourceDestDOBQuestionID, @SourceDestMedicareQuestionID, @SourceDestMatchScoreQuestionID, @SourceDestMatchFlagQuestionID,
 			'envido', @AccountIDEnvidoOnEnvidoDB, @DefaultGroupIDEnvidoDLOnEnvido,
-			@DestCollectionID, @DestSetID, @DestFirstNameQuestionID, @DestMiddleNameQuestionID, @DestLastNameQuestionID, @DestDefaultGender, @DestGenderQuestionID, @DestDOBQuestionID, @DestMedicareQuestionID,
+			@DestCollectionID, @DestSetID, @DestAnswerSetIDQuestionID, @DestFirstNameQuestionID, @DestMiddleNameQuestionID, @DestLastNameQuestionID, @DestDefaultGender, @DestGenderQuestionID, @DestDOBQuestionID, @DestMedicareQuestionID,
 			@StatusQuestionID, null)
 END			 

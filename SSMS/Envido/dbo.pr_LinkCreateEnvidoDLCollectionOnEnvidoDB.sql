@@ -98,7 +98,7 @@ Declare @CalculationType bit = 0
 Declare @Interval nvarchar(20) = null
 Declare @DisplayOnLightBox bit = 0
 Declare @ValidForCurrentDate bit = 0
-set @Rationale = ''				-- Previously declared
+Declare @Rationale nvarchar(500) = ''
 Declare @IsComplianceReport bit = 0
 Declare @IsTrackStatus bit = 0
 Declare @AllowedExt nvarchar(200) = null
@@ -225,7 +225,7 @@ exec uspQuestion_Add 'DestGender', 1, @setid, @defaultvalue, 38, @addedBy, @ispu
 exec uspQuestion_Add 'SourceMedicareNo', 5, @setid, @defaultvalue, 40, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
 					 'MaxLength', '20', '', 1, @NoOfCol, @UnitID, @Formula, @ConQuestionID, @Operator, @CompareValue, @OtherText,
 					 @ConQuestionTypeID, @DateConditionOperator, @SSRSReportID, @Format, @IsNumericOptions, @CalculationType, @Interval, @DisplayOnLightBox,
-					 @ValidForCurrentDate, @Rationale, @IsComplianceReport, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
+					 @ValidForCurrentDate, v, @Rationale, @IsTrackStatus, @AllowedExt, @IsInline, @IsQuestionOnly, @IsInlineNew
 
 -- Add in the DestMedicareNo
 exec uspQuestion_Add 'DestMedicareNo', 5, @setid, @defaultvalue, 42, @addedBy, @ispublished, @isfilter, @isrequired, @tooltip, @quecode,
