@@ -33,6 +33,9 @@ GO
 					THE INITIAL COLLECTION/SET NAMES etc WILL NEED TO BE CHANGED
 					YES, THIS IS A PARTIAL AUTOMATION OF A MANUAL PROCESS
 
+					What this doesn't do
+					- Assign the relevant fields that make up the observation value - This will have to be completed manually
+
     USE:            EXEC dbo.pr_LinkCreateMaster
 					
     REVISIONS:		10/12/2021	DJF			Created
@@ -168,6 +171,9 @@ Declare @QuestionID int
 Declare @QuestionText nVarChar(max)
 Declare @sequence int = 0
 Declare @questionTypeID int
+Declare @IsConcatinated int = 0
+Declare @IsPivotKey int = 0
+Declare @FieldInSourceFile int = 0
 
 DECLARE tblQuestionEnvidoDLSearch CURSOR FOR select QuestionID, QuestionText, sequence, questionTypeID from tblQuestion WHERE SetID = @NewSetIDOnEnvidoDL order by sequence
 OPEN tblQuestionEnvidoDLSearch
@@ -177,9 +183,25 @@ WHILE @@FETCH_STATUS = 0
 
 	print 'Adding: CollectionID - ' + convert(varchar, @NewCollectionIDOnEnvidoDL) + ', ' + @QuestionText + ', ' + convert(varchar, @QuestionID) + ', ' + convert(varchar, @questionTypeID)
 
+	if (@QuestionText = 'ObservationValue')
+		set @IsConcatinated = 1
+	else
+		set @IsConcatinated = 0
+
+	if (@QuestionText = 'SourceKey')
+		set @IsPivotKey = 1
+	else
+		set @IsPivotKey = 0
+
+	if (@QuestionText = 'ProcessedFlag')
+		set @FieldInSourceFile = 0
+	else
+		set @FieldInSourceFile = 1
+
 	insert into tblLinkImportMappingFields (ImportTableMappingID, SourceField, IncludeField, FieldInSourceFile, DefaultDestAnswersOptionID, DefaultDestValue, DestCollectionID, DestSetID,
 											DestQuestionID, DestQuestionText, DestQuestionType, IsPivotKey, IsConcatinated, InObservationValue, Sequence)
-		values (@ImportTableMappingIDEnvidoDL, @QuestionText, 1, 1, null, null, @NewCollectionIDOnEnvidoDL, @NewSetIDOnEnvidoDL, 00, @QuestionText, @questionTypeID, null, 0, 0, @sequence)
+									values(@ImportTableMappingIDEnvidoDL, @QuestionText, 1, @FieldInSourceFile, null, null, @NewCollectionIDOnEnvidoDL, @NewSetIDOnEnvidoDL, 
+											@QuestionID, @QuestionText, @questionTypeID, @IsPivotKey, @IsConcatinated, 0, @sequence)
 
 	FETCH NEXT FROM tblQuestionEnvidoDLSearch INTO @QuestionID, @QuestionText, @sequence, @questionTypeID
 	END  

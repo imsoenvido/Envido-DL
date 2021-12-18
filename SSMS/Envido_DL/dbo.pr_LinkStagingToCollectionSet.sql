@@ -104,11 +104,8 @@ BEGIN
 Print '--STEP-1: Select all the staging records that have not already been processed into the collection-set.'
 			-- This essentially pivots the data for use in uspWorkListRecord_Insert @QueAns later
 	set @SQL = ''
-	set @SQL  = 'select	'+ @PivotField+'
-			,F.*
-	from  '+@SourceDB+'.dbo.'+ltrim(rtrim(@SourceTable)) +'  R
-	cross apply ( values '+char(13) 
-	select @SQL  =  case 
+	set @SQL  = 'select	' + @PivotField + ', F.* from '+@SourceDB+'.dbo.'+ltrim(rtrim(@SourceTable)) +' R cross apply ( values '+char(13) 
+		select @SQL  =  case 
 						 when IncludeField = 1 and FieldInSourceFile = 0 and DefaultDestAnswersOptionID is not null  and DefaultDestAnswersOptionID is not null 
 							then @SQL+ '		('''+SourceField+''',cast('+cast(DefaultDestAnswersOptionID as varchar)+' as varchar(max))),'+char(13)
 						 when IncludeField = 1 and FieldInSourceFile = 0 and DefaultDestAnswersOptionID is not null  and DefaultDestAnswersOptionID is null  and DefaultDestValue is not null 
@@ -116,7 +113,7 @@ Print '--STEP-1: Select all the staging records that have not already been proce
 						 when IncludeField = 1  and FieldInSourceFile = 0  
 							then @SQL+ '		('''+SourceField+''',''''),'+ char(13)
 						 when IncludeField = 1 and FieldInSourceFile = 1  and DestQuestionType = 9 
-							then @SQL+ '		('''+SourceField+''',convert(varchar(max),'+quotename(SourceField)+',105) + '' '' + replace(RIGHT(CONVERT(varchar(max), CONVERT(DATETIME, '+SourceField+'), 131), 14),'':00:000'','' '')),'+char(13)
+							then @SQL+ '		('''+SourceField+''',convert(varchar(max),'+quotename(SourceField)+',105) + '' '' + replace(RIGHT(CONVERT(varchar(max), CONVERT(DATETIME, ['+SourceField+']), 131), 14),'':00:000'','' '')),'+char(13)
  						 when IncludeField = 1 and FieldInSourceFile = 1 and DestQuestionType = 29 
 							then @SQL+ '		('''+SourceField+''',convert(varchar(max),'+quotename(SourceField)+',105)),'+char(13)
 						 when IncludeField = 1 and FieldInSourceFile = 1 and DefaultDestAnswersOptionID is null and DestQuestionType In (1,10) 
@@ -133,9 +130,9 @@ Print '--STEP-1: Select all the staging records that have not already been proce
 						 else @SQL+ '		Not sure' + char(13)
 						 --need for Checkbox
 					end 
-	from dbo.tblLinkImportMappingFields
-	where ImportTableMappingID = @ImportTableMappingID
-	and IncludeField = 1
+		from dbo.tblLinkImportMappingFields
+			where ImportTableMappingID = @ImportTableMappingID
+			and IncludeField = 1
 
 	select @SQL = substring(@SQL,0,len(@SQL)-1)
 

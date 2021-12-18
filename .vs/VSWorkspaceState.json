@@ -3,8 +3,10 @@
     "",
     "\\SSMS",
     "\\SSMS\\Envido",
-    "\\SSMS\\Envido_DL"
+    "\\SSMS\\Envido\\SA-PCCOC",
+    "\\SSMS\\Envido_DL",
+    "\\SSMS\\Envido_DL\\SA-PCCOC"
   ],
-  "SelectedNode": "\\SSMS\\Envido\\dbo.pr_LinkCreateEnvidoDLCollectionOnEnvidoDB.sql",
+  "SelectedNode": "\\SSMS\\Envido\\SA-PCCOC\\dbo.pr_LinkMasterCancerNotification.sql",
   "PreviewInSolutionExplorer": false
 }

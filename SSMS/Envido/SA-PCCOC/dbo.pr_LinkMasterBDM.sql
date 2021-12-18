@@ -47,33 +47,35 @@ Set @EmailBodyMessage = '<B>Processing BDM (' + @EnvironmentName + ')</B><BR><BR
 
 BEGIN TRY
 
-	--STEP-1:  Move the data to staging ; select count(*) from tblLinkStagingBDM
-	Set @EmailBodyMessage = @EmailBodyMessage + 'Step 1 - Moving data from landing to staging<BR>'
-	EXEC envido_dl.dbo.pr_LinkStagingBDM
+--STEP-1:  Move the data to staging ; select count(*) from tblLinkStagingBDM
+Set @EmailBodyMessage = @EmailBodyMessage + 'Step 1 - Moving data from landing to staging<BR>'
+EXEC envido_dl.dbo.pr_LinkStagingBDM
 
 
-	-- Step-2: Retrofit the observation value as needed - Found in tblLinkStagingBDM
-	Set @EmailBodyMessage = @EmailBodyMessage + 'Step 2 - Adding observation value to tblLinkStagingBDM<BR>'
-	EXEC envido_dl.dbo.pr_LinkObservationValue @ID = @SetID
+-- Step-2: Retrofit the observation value as needed - Found in tblLinkStagingBDM
+Set @EmailBodyMessage = @EmailBodyMessage + 'Step 2 - Adding observation value to tblLinkStagingBDM<BR>'
+if (@EnvironmentName = 'Development')
+	EXEC envido_dl.dbo.pr_LinkObservationValue @ID = 22
 
-	-- Step-3: Import the source data to the collection on Envido_dl
-	Set @EmailBodyMessage = @EmailBodyMessage + 'Step 3 - Move data from staging into Envido_dl collection<BR>'
-	if (@EnvironmentName = 'Development')
-		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 1, @debug = 0
-	if (@EnvironmentName = 'Staging')
-		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 1, @debug = 0
-	if (@EnvironmentName = 'Production')
-		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 1, @debug = 0
+-- Step-3: Import the source data to the collection on Envido_dl
+Set @EmailBodyMessage = @EmailBodyMessage + 'Step 3 - Move data from staging into Envido_dl collection<BR>'
+if (@EnvironmentName = 'Development')
+	EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 22, @debug = 0
+if (@EnvironmentName = 'Staging')
+	EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 1, @debug = 0
+if (@EnvironmentName = 'Production')
+	EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 1, @debug = 0
 
-	-- Step-4: Retrofit the AnswerSetID to the Staging table 
-	Set @EmailBodyMessage = @EmailBodyMessage + 'Step 4 - Retrofit AnswerSetID - Currently done in Stage 3<BR>'
-	-- This is currently happening in pr_LinkStagingToCollectionSet
-	-- consider moving to a separte procedure 
+-- Step-4: Retrofit the AnswerSetID to the Staging table 
+Set @EmailBodyMessage = @EmailBodyMessage + 'Step 4 - Retrofit AnswerSetID - Currently done in Stage 3<BR>'
+-- This is currently happening in pr_LinkStagingToCollectionSet
+-- consider moving to a separte procedure 
+
 
 	-- Step-5: Import the data to the SA-PCCOC Data-Linkage collection on Core
 	Set @EmailBodyMessage = @EmailBodyMessage + 'Step 5 - Move data from envido_dl collection to Envido core collection<BR>'
 	if (@EnvironmentName = 'Development')
-		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 5
+		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 23
 	if (@EnvironmentName = 'Staging')
 		EXEC envido_dl.dbo.pr_LinkStagingToCollectionSet @ImportTableMappingID = 3
 	if (@EnvironmentName = 'Production')

@@ -26,7 +26,7 @@ CREATE PROCEDURE [dbo].[pr_LinkStagingBDM]
 AS
 BEGIN
 
-insert into tblLinkStagingBDM (	[Registration number], [Surname], [Given names], [Sex], [Date of death], [Place of death - line 1], [Place of death - line 2],
+insert into tblLinkStagingBDM (	[SourceKey], [Registration number], [Surname], [Given names], [Sex], [Date of death], [Place of death - line 1], [Place of death - line 2],
 								[Date of birth], [Age at death], [Age at death units], [Place of birth], [Occupation], [Address - line 1], [Address - line 2],
 								[Aboriginal indicator], [TSI indicator], [Marital status], 
 								[Marriage 1 - date of marriage indicator], [Marriage 1 - date of marriage], [Marriage 1 - age at marriage indicator], [Marriage 1 - age at marriage],
@@ -42,7 +42,8 @@ insert into tblLinkStagingBDM (	[Registration number], [Surname], [Given names],
 								[Cause of death 7 - cause], [Cause of death 7 - duration], [Cause of death 7 - duration units],
 								[ImportedDateTime], [Father Surname], [Father Given Name], [Mother Surname], [Mother Given Name])
 
-	Select	[Registration number], [Surname], [Given names], [Sex], [Date of death], [Place of death - line 1], [Place of death - line 2], [Date of birth], 
+	Select	convert(bigint,ltrim(rtrim([Registration number]))+ convert(varchar,[Date of death],112)) as SourceKey,
+			[Registration number], [Surname], [Given names], [Sex], [Date of death], [Place of death - line 1], [Place of death - line 2], [Date of birth], 
 			[Age at death], [Age at death units], [Place of birth], [Occupation], [Address - line 1], [Address - line 2],
 			[Aboriginal indicator], [TSI indicator], [Marital status],
 			[Marriage 1 - date of marriage indicator], [Marriage 1 - date of marriage], [Marriage 1 - age at marriage indicator], [Marriage 1 - age at marriage],

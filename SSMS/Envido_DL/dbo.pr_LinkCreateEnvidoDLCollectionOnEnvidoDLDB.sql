@@ -120,7 +120,8 @@ WHILE @@FETCH_STATUS = 0
 
 		if (@Column_Type = 'int') set @questionTypeid = 7			-- Number
 		if (@Column_Type = 'nvarchar') set @questionTypeid = 5		-- Text box
-		if (@Column_Type = 'date') set @questionTypeid = 9			-- Date
+		if (@Column_Type = 'date') set @questionTypeid = 29			-- Date only
+		if (@Column_Type = 'datetime') set @questionTypeid = 9		-- Date + time
 		if (@Column_Type = 'smalldatetime') set @questionTypeid = 9	-- Date
 
 		set @sequence = @sequence + 2
