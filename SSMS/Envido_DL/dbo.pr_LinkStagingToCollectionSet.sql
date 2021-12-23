@@ -282,18 +282,43 @@ Print '--STEP-5: Insert the AnswerSet records to the destination collection'
 
 Print '--STEP-6: Insert the Answer records'
 
-	Set @SqlInsert = ''
 
-	select @SqlInsert  = @SqlInsert +'
-	insert into '+@DestDB +'.dbo.tblAnswer (QuestionID,AnswerSetID,AnswerText)
-	select	DestQuestionID,AnswerSetID,AnswerValue
-	from	dbo.#ImportData
-	order by AnswerSetID,[Sequence]'
+	DECLARE @IDs TABLE (ThisID nVaChar(max))
+	DECLARE @Batch TABLE (ThisID nVaChar(max))
 
-	exec  (@SqlInsert)
+	INSERT INTO @IDs (ThisID) SELECT (CAST(AnswerSetID AS VarChar(10)) + CAST(DestQuestionID AS VarChar(10))) as ThisID FROM dbo.#ImportData order by AnswerSetID, [Sequence]
+
+	WHILE EXISTS (SELECT TOP 1 ThisID FROM @IDs)
+		BEGIN
+		INSERT INTO @Batch (ThisID) SELECT TOP 1000 ThisID FROM @IDS
+
+		Set @SqlInsert = ''
+
+		select @SqlInsert  = @SqlInsert + 'insert into ' + @DestDB + '.dbo.tblAnswer (QuestionID,AnswerSetID,AnswerText)
+			select	DestQuestionID,AnswerSetID,AnswerValue
+				from	dbo.#ImportData
+				WHERE  (CAST(AnswerSetID AS VarChar(10)) + CAST(DestQuestionID AS VarChar(10))) as ThisID IN (SELECT ThisID FROM @Batch)'
+		if @debug = 1
+			exec (@SqlInsert)
+
+		DELETE @IDs WHERE ThisID IN (SELECT ThisID FROM @Batch)
+		DELETE @Batch
+		END
+	-- Old way of doing Step 6.
+	-- Under some circumstances (dealing with very large sets resulted in this error - The transaction log for database 'envido_dl' is full due to 'ACTIVE_TRANSACTION'.
+
+	--Set @SqlInsert = ''
+
+	--select @SqlInsert  = @SqlInsert +'
+	--insert into '+@DestDB +'.dbo.tblAnswer (QuestionID,AnswerSetID,AnswerText)
+	--select	DestQuestionID,AnswerSetID,AnswerValue
+	--from	dbo.#ImportData
+	--order by AnswerSetID,[Sequence]'
+
+	--exec (@SqlInsert)
 	
-	if @debug = 1
-		print (@SqlInsert)
+	--if @debug = 1
+	--	print (@SqlInsert)
 	
 	Set @SqlInsert = ''
 
@@ -324,64 +349,3 @@ Print '--STEP-7: Pivot and insert to the numbered table'
 			) AS Record ')
 
 END
-
-
-
-
-
---	declare @ImportTableMappingID int 
---	set @ImportTableMappingID = 3					-- This is only set for testing. Remove prior to deploying so there is no default 
---	declare @debug int 
---	Set @Debug = 1
---	declare @CurrentDate datetime
---	declare @SourceDB varchar (50)
---	declare @SourceTable varchar (50)
---	declare @DestDB varchar (50)
---	declare @ExcludeQuestionID varchar (50)
---	declare @PivotField varchar (50)
---	declare @DestSetId varchar (max)
---	declare @DefaultGroupid varchar (max)
---	declare @DefaultUserID varchar(max)
---	declare @QueAns dbo.QueAns
---	declare @SQL varchar (max)
---	declare @SqlInsert varchar (max)
---	declare @SourceKey varchar (max)
---	declare @CreateSourceAnswerSetIDs int 
-		
---	select @CurrentDate = getdate()
---	select @SourceDB  = SourceDatabase from [tblLinkImportMappingTable] where ImportTableMappingID = @ImportTableMappingID
---	select @SourceTable  = SourceTable from [tblLinkImportMappingTable] where ImportTableMappingID = @ImportTableMappingID
---	select @DestDB  = DestDatabase from [tblLinkImportMappingTable] where ImportTableMappingID = @ImportTableMappingID
---	select @DefaultGroupid  = DefaultGroupId from [tblLinkImportMappingTable] where ImportTableMappingID = @ImportTableMappingID
---	select @DefaultUserID  = DefaultUserId from [tblLinkImportMappingTable] where ImportTableMappingID = @ImportTableMappingID
---	select @CreateSourceAnswerSetIDs = CreateSourceAnswerSetIDs from  dbo.tblLinkImportMappingTable where ImportTableMappingID = @ImportTableMappingID 
---	select @DestSetId = DestSetID from  dbo.tblLinkImportMappingFields where ImportTableMappingID = @ImportTableMappingID
---	select @PivotField = SourceField from  dbo.tblLinkImportMappingFields where ImportTableMappingID = @ImportTableMappingID and IsPivotKey =1
---	select @ExcludeQuestionID = cast(DestQuestionID as varchar) from  dbo.tblLinkImportMappingFields where ImportTableMappingID = @ImportTableMappingID and IsPivotKey =1
-
---Print '--STEP-7: Pivot and insert to the numbered table'
-
---	/*** PROBABLY need to add conversions to for dates : possibly re-foramt the date in #ImportData to MDY from DMY ****/
-
---	-- Retrieve the numbered columns for the table
-
---	-- select * from #Cols
---	-- select * From #ImportData
-
---	IF OBJECT_ID('tempdb..#Cols') IS NOT NULL DROP TABLE #Cols
---	select distinct DestQuestionID into #Cols  FROM	#ImportData R order by DestQuestionID 
-
---	Declare @Column varchar(max)
---	set @Column = ''
---	Select @Column = STUFF((SELECT ','+'['+ convert(varchar,DestQuestionID) +']' FROM	#Cols R order by DestQuestionID FOR XML PATH('')),1, 1, '')	
---	print @Column 
-
---	EXEC('insert into '+@DestDB +'.dbo.['+@DestSetId+'] (AnswerSetID,SuperAnswerSetID,ParentAnswerSetID,CreatedBy,ModifiedBy,CreatedOn,ModifiedOn,GroupID, '+ @Column + ') 
---	SELECT AnswerSetId,SuperParentAnswerSetID,ParentAnswerSetID,AddedBy,LastModifiedBy,AddedDate,LastModifiedDate,GoupId,'+ @Column + 
---	'FROM (SELECT AnswerSetID,SuperParentAnswerSetID,ParentAnswerSetID,AddedBy,LastModifiedBy,AddedDate,LastModifiedDate,GoupId,DestQuestionID, AnswerValue as Value1 				
---			FROM #ImportData) AS P PIVOT
---			(
---			Max(Value1) 
---			FOR DestQuestionID IN (' + @Column + ')
---			) AS Record ')
-			 

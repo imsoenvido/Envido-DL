@@ -5,8 +5,9 @@
     "\\SSMS\\Envido",
     "\\SSMS\\Envido\\SA-PCCOC",
     "\\SSMS\\Envido_DL",
-    "\\SSMS\\Envido_DL\\SA-PCCOC"
+    "\\SSMS\\Envido_DL\\SA-PCCOC",
+    "\\SSMS\\Envido_DL\\SCOOP"
   ],
-  "SelectedNode": "\\SSMS\\Envido\\SA-PCCOC\\dbo.pr_LinkMasterCancerNotification.sql",
+  "SelectedNode": "\\SSMS\\Envido_DL\\dbo.pr_LinkStagingToCollectionSet.sql",
   "PreviewInSolutionExplorer": false
 }
