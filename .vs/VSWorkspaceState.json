@@ -1,13 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\SSMS",
-    "\\SSMS\\Envido",
-    "\\SSMS\\Envido\\SA-PCCOC",
-    "\\SSMS\\Envido_DL",
-    "\\SSMS\\Envido_DL\\SA-PCCOC",
-    "\\SSMS\\Envido_DL\\SCOOP"
+    ""
   ],
-  "SelectedNode": "\\SSMS\\Envido_DL\\dbo.pr_LinkStagingToCollectionSet.sql",
+  "SelectedNode": "\\DL-Core-2021.sln",
   "PreviewInSolutionExplorer": false
 }
