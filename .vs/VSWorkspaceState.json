@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SSIS",
+    "\\SSIS\\SAPCCOC"
   ],
+  "SelectedNode": "\\DL-Core-2021.sln",
   "PreviewInSolutionExplorer": false
 }
