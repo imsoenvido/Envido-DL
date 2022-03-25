@@ -35,7 +35,13 @@ GO
 					01/09/2021	DJF		The Proximal/Distal scores had been swapped from PROC42 to PROC44 and vice versa
 					07/09/2021	DJF		Include all QuestionID's in tblAnswer not just the questions that you have data for
 					24/09/2021	DJF		DO a whole lot of initialisations for variables that get data from tblAnswersOptions
-					07/12/2021	DJF		Chnaged QueCode for DOB & date procedure done
+					07/12/2021	DJF		Changed QueCode for DOB & date procedure done
+					25/03/2022	DJF		A new field called GPEmail was added to the patient registration set - need to add this to the upload
+										Added the following fields into the Procedure set
+										- @ReadyForReviewQuestionID
+										- @ReadyForAdminQuestionID
+										- @DrAgreeQuestionID
+										- @DrRecommendationCommentQuestionID
 
 -- ========================================================================================*/
 
@@ -174,6 +180,7 @@ Declare @SpecialistSuburbStatePostcodeQuestionID int
 Declare @SpecialistFaxNumberQuestionID int
 Declare @SpecialistPhoneQuestionID int
 Declare @GlobalidQuestionID int
+Declare @GPEmailQuestionID int
 
 -- Find the value of the QuestionID's
 select @FamilynamekeyQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR2'
@@ -234,6 +241,7 @@ select @SpecialistSuburbStatePostcodeQuestionID = QuestionID from tblQuestion wh
 select @SpecialistFaxNumberQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR65'
 select @SpecialistPhoneQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR66'
 select @GlobalidQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR68'
+select @GPEmailQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'GPEmail'
 
 -- Declare variables for the actual values in the procedure set
 declare @GivenName nVarChar(max)
@@ -352,8 +360,13 @@ declare @SurveillanceRecommendationOutpatientAppointmentIntervalMonthsQuestionID
 declare @SurveillanceRecommendationOutpatientAppointmentDueDateQuestionID int	
 declare @SurveillanceRecommendationCaseReviewIntervalMonthsQuestionID int	
 declare @SurveillanceRecommendationCaseReviewDueDateQuestionID int	
+declare @ReadyForReviewQuestionID int
+declare @ReadyForAdminQuestionID int
+declare @DrAgreeQuestionID int
+declare @DrRecommendationCommentQuestionID int
 
 -- Find the value of the QuestionID's
+select @ReadyForReviewQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'ReadyForReview'
 select @RecallIntervalQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc1'
 select @DateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc2'
 select @PreviousDateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc3'
@@ -435,6 +448,9 @@ select @SurveillanceRecommendationOutpatientAppointmentIntervalMonthsQuestionID 
 select @SurveillanceRecommendationOutpatientAppointmentDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc66'
 select @SurveillanceRecommendationCaseReviewIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc67'
 select @SurveillanceRecommendationCaseReviewDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc68'
+select @ReadyForAdminQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'ReadyForAdmin'
+select @DrAgreeQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DrAgree'
+select @DrRecommendationCommentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DrRecommendationComment'
 
 -- Declare variables for the actual values in the procedure set
 declare @DateProcedureDone nVarChar(max)
@@ -660,6 +676,7 @@ WHILE @@FETCH_STATUS = 0
 			delete from @QueAns
 			delete from @QueAns1
 
+			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReadyForReviewQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@RecallIntervalQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateProcedureDueQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@PreviousDateProcedureDueQuestionID,'',0)
@@ -741,6 +758,9 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationOutpatientAppointmentDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationCaseReviewIntervalMonthsQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationCaseReviewDueDateQuestionID,'',0)
+			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReadyForAdminQuestionID,'',0)
+			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DrAgreeQuestionID,'',0)
+			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DrRecommendationCommentQuestionID,'',0)
 
 			insert into @QueAns1 select * from @QueAns
 
@@ -1008,6 +1028,7 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SpecialistFaxNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SpecialistPhoneQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GlobalidQuestionID,'',0)
+			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GPEmailQuestionID,'',0)
 
 			insert into @QueAns1 select * from @QueAns
 

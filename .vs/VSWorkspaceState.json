@@ -1,13 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\SSIS",
-    "\\SSIS\\SAPCCOC",
-    "\\SSMS",
-    "\\SSMS\\Envido",
-    "\\SSMS\\Envido\\SCOOP",
-    "\\SSMS\\Envido_DL",
-    "\\SSMS\\Envido_DL\\SCOOP"
+    ""
   ],
   "PreviewInSolutionExplorer": false
 }
