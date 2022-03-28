@@ -42,6 +42,20 @@ GO
 										- @ReadyForAdminQuestionID
 										- @DrAgreeQuestionID
 										- @DrRecommendationCommentQuestionID
+					28/03/2022	DJF		Comment out the following as they have been set to inactive (IsPublished = 0)
+										- @DateReminderSentQuestionID (Proc6)
+										- @ReasonForReplacementFitQuestionID (Proc20)
+										- @DateReplacementFitSentQuestionID (Proc21)
+										- @FitPdFormNotReturnedQuestionID (Proc24)
+										- @StorageTempQuestionID (Proc29)
+										- @RecommendedColonoscopyFollowUpTimeMonthsQuestionID (Proc35)
+										- @ExpiryQuestionID (Proc52)
+										- @NotNeededDateAndTimeQuestionID (RevDate)
+										- @NextColonoscopyDueDateQuestionID (ColDueDate)
+										- @NextEndoscopyDueDateQuestionID (EndoDueDate)
+										- @SurveillanceRecommendationFitIntervalMonthsQuestionID (Proc61)
+										- @SurveillanceRecommendationFitDueDateQuestionID (Proc62)
+										Comment out PatientCardFile due to Invalid Column name error
 
 -- ========================================================================================*/
 
@@ -284,7 +298,7 @@ declare @DateProcedureDueQuestionID int
 declare @PreviousDateProcedureDueQuestionID int	
 declare @DateProcedureDoneQuestionID int	
 declare @ProcedureNumberQuestionID int	
-declare @DateReminderSentQuestionID int	
+--declare @DateReminderSentQuestionID int	
 declare @ProcedureLocationQuestionID int	
 declare @ProcedureSpecialistQuestionID int	
 declare @ReasonForProcedureQuestionID int	
@@ -297,21 +311,21 @@ declare @OtherOutcome2QuestionID int
 declare @OtherOutcome3QuestionID int	
 declare @OtherOutcome4QuestionID int	
 declare @DateFitSentQuestionID int	
-declare @ReasonForReplacementFitQuestionID int	
-declare @DateReplacementFitSentQuestionID int	
+--declare @ReasonForReplacementFitQuestionID int	
+--declare @DateReplacementFitSentQuestionID int	
 declare @DateFitDevelopedQuestionID int	
 declare @DateOriginalKitReturnedQuestionID int	
-declare @FitPdFormNotReturnedQuestionID int	
+--declare @FitPdFormNotReturnedQuestionID int	
 declare @SampleDate1QuestionID int	
 declare @SampleResult1QuestionID int	
 declare @SampleDate2QuestionID int	
 declare @SampleResult2QuestionID int	
-declare @StorageTempQuestionID int	
+--declare @StorageTempQuestionID int	
 declare @BarcodeNumberQuestionID int	
 declare @KitBatchNumberQuestionID int	
 declare @ReasonForExclusionQuestionID int	
 declare @CommentsQuestionID int	
-declare @RecommendedColonoscopyFollowUpTimeMonthsQuestionID int	
+--declare @RecommendedColonoscopyFollowUpTimeMonthsQuestionID int	
 declare @ActionNeededQuestionID int	
 declare @CompliantWithNhmrcRecommendationQuestionID int	
 declare @ReasonForNonComplianceQuestionID int	
@@ -327,20 +341,20 @@ declare @WithdrawalTimeQuestionID int
 declare @IntubationDistanceQuestionID int	
 declare @CommentQuestionID int	
 declare @MarkAsClosedQuestionID int	
-declare @ExpiryQuestionID int	
+--declare @ExpiryQuestionID int	
 declare @EmrVisitNumberQuestionID int	
 declare @ScoopNurseQuestionID int	
-declare @NotNeededDateAndTimeQuestionID int	
+--declare @NotNeededDateAndTimeQuestionID int	
 declare @DateOfScoopNurseReviewQuestionID int	
 declare @DoctorToReviewRecommendationQuestionID int	
 declare @DateReviewSentToDoctorQuestionID int	
 declare @DateReviewReturnedByDoctorQuestionID int	
 declare @ViewFobtResultsQuestionID int	
-declare @PatientCardfileQuestionID int	
+--declare @PatientCardfileQuestionID int	
 declare @BowelPrepGivenQuestionID int	
-declare @NextColonoscopyDueDateQuestionID int	
+--declare @NextColonoscopyDueDateQuestionID int	
 declare @NotForScoopLetterTypeQuestionID int	
-declare @NextEndoscopyDueDateQuestionID int	
+--declare @NextEndoscopyDueDateQuestionID int	
 declare @FitRecommendationQuestionID int	
 declare @TypeOfSymptoms2QuestionID int	
 declare @TypeOfSymptoms3QuestionID int	
@@ -352,8 +366,8 @@ declare @SurveillanceRecommendationUpperEndoscopyIntervalMonthsQuestionID int
 declare @SurveillanceRecommendationUpperEndoscopyDueDateQuestionID int	
 declare @SurveillanceRecommendationSigmoidoscopyIntervalMonthsQuestionID int	
 declare @SurveillanceRecommendationSigmoidoscopyDueDateQuestionID int	
-declare @SurveillanceRecommendationFitIntervalMonthsQuestionID int	
-declare @SurveillanceRecommendationFitDueDateQuestionID int	
+--declare @SurveillanceRecommendationFitIntervalMonthsQuestionID int	
+--declare @SurveillanceRecommendationFitDueDateQuestionID int	
 declare @SurveillanceRecommendationVirtualColonoscopyIntervalMonthsQuestionID int	
 declare @SurveillanceRecommendationVirtualColonoscopyDueDateQuestionID int	
 declare @SurveillanceRecommendationOutpatientAppointmentIntervalMonthsQuestionID int	
@@ -372,7 +386,7 @@ select @DateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @
 select @PreviousDateProcedureDueQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc3'
 select @DateProcedureDoneQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DateProcDone'
 select @ProcedureNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc5'
-select @DateReminderSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc6'
+--select @DateReminderSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc6'
 select @ProcedureLocationQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc7'
 select @ProcedureSpecialistQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc8'
 select @ReasonForProcedureQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc9'
@@ -385,21 +399,21 @@ select @OtherOutcome2QuestionID = QuestionID from tblQuestion where SetID = @Des
 select @OtherOutcome3QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc16'
 select @OtherOutcome4QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc17'
 select @DateFitSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc19'
-select @ReasonForReplacementFitQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc20'
-select @DateReplacementFitSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc21'
+--select @ReasonForReplacementFitQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc20'
+--select @DateReplacementFitSentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc21'
 select @DateFitDevelopedQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc22'
 select @DateOriginalKitReturnedQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc23'
-select @FitPdFormNotReturnedQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc24'
+--select @FitPdFormNotReturnedQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc24'
 select @SampleDate1QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc25'
 select @SampleResult1QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc26'
 select @SampleDate2QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc27'
 select @SampleResult2QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc28'
-select @StorageTempQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc29'
+--select @StorageTempQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc29'
 select @BarcodeNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc30'
 select @KitBatchNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc31'
 select @ReasonForExclusionQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc33'
 select @CommentsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc34'
-select @RecommendedColonoscopyFollowUpTimeMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc35'
+--select @RecommendedColonoscopyFollowUpTimeMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc35'
 select @ActionNeededQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc36'
 select @CompliantWithNhmrcRecommendationQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc37'
 select @ReasonForNonComplianceQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc38'
@@ -415,20 +429,20 @@ select @WithdrawalTimeQuestionID = QuestionID from tblQuestion where SetID = @De
 select @IntubationDistanceQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc49'
 select @CommentQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc50'
 select @MarkAsClosedQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc51'
-select @ExpiryQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc52'
+--select @ExpiryQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc52'
 select @EmrVisitNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc53'
 select @ScoopNurseQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'RevNurse'
-select @NotNeededDateAndTimeQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'RevDate'
+--select @NotNeededDateAndTimeQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'RevDate'
 select @DateOfScoopNurseReviewQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'SCOOPRevDate'
 select @DoctorToReviewRecommendationQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DrForApproval'
 select @DateReviewSentToDoctorQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DateRevtoDr'
 select @DateReviewReturnedByDoctorQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'DateReturnedDr'
 select @ViewFobtResultsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'ViewFOBT'
-select @PatientCardfileQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'PatientCardFileProcedure'
+--select @PatientCardfileQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'PatientCardFileProcedure'
 select @BowelPrepGivenQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'BowelPrep'
-select @NextColonoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'ColDueDate'
+--select @NextColonoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'ColDueDate'
 select @NotForScoopLetterTypeQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'RecEndoDue'
-select @NextEndoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'EndoDueDate'
+--select @NextEndoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'EndoDueDate'
 select @FitRecommendationQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'FITRecom'
 select @TypeOfSymptoms2QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Symp2'
 select @TypeOfSymptoms3QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Symp3'
@@ -440,8 +454,8 @@ select @SurveillanceRecommendationUpperEndoscopyIntervalMonthsQuestionID = Quest
 select @SurveillanceRecommendationUpperEndoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc58'
 select @SurveillanceRecommendationSigmoidoscopyIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc59'
 select @SurveillanceRecommendationSigmoidoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc60'
-select @SurveillanceRecommendationFitIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc61'
-select @SurveillanceRecommendationFitDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc62'
+--select @SurveillanceRecommendationFitIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc61'
+--select @SurveillanceRecommendationFitDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc62'
 select @SurveillanceRecommendationVirtualColonoscopyIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc63'
 select @SurveillanceRecommendationVirtualColonoscopyDueDateQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc64'
 select @SurveillanceRecommendationOutpatientAppointmentIntervalMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc65'
@@ -682,7 +696,7 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@PreviousDateProcedureDueQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateProcedureDoneQuestionID,@DateProcedureDone,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ProcedureNumberQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReminderSentQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReminderSentQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ProcedureLocationQuestionID,@ProcedureLocation,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ProcedureSpecialistQuestionID,@ProcedureSpecialist,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForProcedureQuestionID,@ReasonForProcedure,0)
@@ -695,21 +709,21 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@OtherOutcome3QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@OtherOutcome4QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateFitSentQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForReplacementFitQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReplacementFitSentQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForReplacementFitQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReplacementFitSentQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateFitDevelopedQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOriginalKitReturnedQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@FitPdFormNotReturnedQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@FitPdFormNotReturnedQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleDate1QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleResult1QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleDate2QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleResult2QuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@StorageTempQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@StorageTempQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@BarcodeNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@KitBatchNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForExclusionQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@CommentsQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@RecommendedColonoscopyFollowUpTimeMonthsQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@RecommendedColonoscopyFollowUpTimeMonthsQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ActionNeededQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@CompliantWithNhmrcRecommendationQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForNonComplianceQuestionID,'',0)
@@ -725,20 +739,20 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@IntubationDistanceQuestionID,@IntubationDistance,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@CommentQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@MarkAsClosedQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ExpiryQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ExpiryQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@EmrVisitNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ScoopNurseQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NotNeededDateAndTimeQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NotNeededDateAndTimeQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfScoopNurseReviewQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DoctorToReviewRecommendationQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReviewSentToDoctorQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateReviewReturnedByDoctorQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ViewFobtResultsQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@PatientCardfileQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@PatientCardfileQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@BowelPrepGivenQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NextColonoscopyDueDateQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NextColonoscopyDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NotForScoopLetterTypeQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NextEndoscopyDueDateQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@NextEndoscopyDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@FitRecommendationQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@TypeOfSymptoms2QuestionID,@TypeOfSymptoms2,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@TypeOfSymptoms3QuestionID,@TypeOfSymptoms3,0)
@@ -750,8 +764,8 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationUpperEndoscopyDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationSigmoidoscopyIntervalMonthsQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationSigmoidoscopyDueDateQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationFitIntervalMonthsQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationFitDueDateQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationFitIntervalMonthsQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationFitDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationVirtualColonoscopyIntervalMonthsQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationVirtualColonoscopyDueDateQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurveillanceRecommendationOutpatientAppointmentIntervalMonthsQuestionID,'',0)
