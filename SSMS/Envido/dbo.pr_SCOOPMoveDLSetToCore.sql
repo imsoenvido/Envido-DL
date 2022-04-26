@@ -56,6 +56,16 @@ GO
 										- @SurveillanceRecommendationFitIntervalMonthsQuestionID (Proc61)
 										- @SurveillanceRecommendationFitDueDateQuestionID (Proc62)
 										Comment out PatientCardFile due to Invalid Column name error
+					26/04/2022	DJF		Comment out the following fields from the patient registration set as they have been set to inactive
+										- @FamilynamekeyQuestionID (PR2)
+										- @HighRiskPatientQuestionID (PR14)
+										- @DateOfOptoutQuestionID (PR15)
+										- @ReasonForReferralOrReferralByQuestionID (PR48)
+										- @WithdrawnByQuestionID (PR53)
+										- @GlobalidQuestionID (PR68)
+										Comment out the following fields from the procedure set as they have been set to inactive
+										- @BarcodeNumberQuestionID (Proc30)
+										- @KitBatchNumberQuestionID (Proc31)
 
 -- ========================================================================================*/
 
@@ -136,7 +146,7 @@ select @DestAnswersetIdQuestionID = QuestionID from tblQuestion where SetID = @S
 
 -- **** Variables used for the patient registration set
 -- declare Question ID's
-Declare @FamilynamekeyQuestionID int
+--Declare @FamilynamekeyQuestionID int
 Declare @TitleQuestionID int
 Declare @GivenNameQuestionID int
 Declare @PreferredNameQuestionID int
@@ -147,8 +157,8 @@ Declare @DateOfBirthQuestionID int
 Declare @AgeQuestionID int
 Declare @DeceasedQuestionID int
 Declare @DateOfDeathQuestionID int
-Declare @HighRiskPatientQuestionID int
-Declare @DateOfOptOutQuestionID int
+--Declare @HighRiskPatientQuestionID int
+--Declare @DateOfOptOutQuestionID int
 Declare @AddressUnknownQuestionID int
 Declare @AddressLine1QuestionID int
 Declare @AddressLine2QuestionID int
@@ -176,11 +186,11 @@ Declare @CurrentFilingLocationQuestionID int
 Declare @DateOfFilingLocationQuestionID int
 Declare @CurrentScoopFolderQuestionID int
 Declare @Comments1QuestionID int
-Declare @ReasonForReferralOrReferralByQuestionID int
+--Declare @ReasonForReferralOrReferralByQuestionID int
 Declare @Comments2QuestionID int
 Declare @ReasonForScoopEnrolmentQuestionID int
 Declare @DateOfEnrollmentQuestionID int
-Declare @WithdrawnByQuestionID int
+--Declare @WithdrawnByQuestionID int
 Declare @ReasonForWithdrawalQuestionID int
 Declare @DateOfWithdrawalQuestionID int
 Declare @SurnameQuestionID int
@@ -193,11 +203,11 @@ Declare @SpecialistAddressLine2QuestionID int
 Declare @SpecialistSuburbStatePostcodeQuestionID int
 Declare @SpecialistFaxNumberQuestionID int
 Declare @SpecialistPhoneQuestionID int
-Declare @GlobalidQuestionID int
+--Declare @GlobalidQuestionID int
 Declare @GPEmailQuestionID int
 
 -- Find the value of the QuestionID's
-select @FamilynamekeyQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR2'
+--select @FamilynamekeyQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR2'
 select @TitleQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR3'
 select @GivenNameQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR4'
 select @PreferredNameQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR5'
@@ -208,8 +218,8 @@ select @DateOfBirthQuestionID = QuestionID from tblQuestion where SetID = @DestP
 select @AgeQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR11'
 select @DeceasedQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR12'
 select @DateOfDeathQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR13'
-select @HighRiskPatientQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR14'
-select @DateOfOptoutQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR15'
+--select @HighRiskPatientQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR14'
+--select @DateOfOptoutQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR15'
 select @AddressUnknownQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR17'
 select @AddressLine1QuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR18'
 select @AddressLine2QuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR19'
@@ -237,11 +247,11 @@ select @CurrentFilingLocationQuestionID = QuestionID from tblQuestion where SetI
 select @DateOfFilingLocationQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR44'
 select @CurrentScoopFolderQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR45'
 select @Comments1QuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR46'
-select @ReasonForReferralOrReferralByQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR48'
+--select @ReasonForReferralOrReferralByQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR48'
 select @Comments2QuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR49'
 select @ReasonForScoopEnrolmentQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR50'
 select @DateOfEnrollmentQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR51'
-select @WithdrawnByQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR53'
+--select @WithdrawnByQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR53'
 select @ReasonForWithdrawalQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR54'
 select @DateOfWithdrawalQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR55'
 select @SurnameQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR56'
@@ -254,7 +264,7 @@ select @SpecialistAddressLine2QuestionID = QuestionID from tblQuestion where Set
 select @SpecialistSuburbStatePostcodeQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR64'
 select @SpecialistFaxNumberQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR65'
 select @SpecialistPhoneQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR66'
-select @GlobalidQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR68'
+--select @GlobalidQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'PR68'
 select @GPEmailQuestionID = QuestionID from tblQuestion where SetID = @DestPatientRegistrationSetID and QueCode = 'GPEmail'
 
 -- Declare variables for the actual values in the procedure set
@@ -321,8 +331,8 @@ declare @SampleResult1QuestionID int
 declare @SampleDate2QuestionID int	
 declare @SampleResult2QuestionID int	
 --declare @StorageTempQuestionID int	
-declare @BarcodeNumberQuestionID int	
-declare @KitBatchNumberQuestionID int	
+--declare @BarcodeNumberQuestionID int	
+--declare @KitBatchNumberQuestionID int	
 declare @ReasonForExclusionQuestionID int	
 declare @CommentsQuestionID int	
 --declare @RecommendedColonoscopyFollowUpTimeMonthsQuestionID int	
@@ -409,8 +419,8 @@ select @SampleResult1QuestionID = QuestionID from tblQuestion where SetID = @Des
 select @SampleDate2QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc27'
 select @SampleResult2QuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc28'
 --select @StorageTempQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc29'
-select @BarcodeNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc30'
-select @KitBatchNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc31'
+--select @BarcodeNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc30'
+--select @KitBatchNumberQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc31'
 select @ReasonForExclusionQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc33'
 select @CommentsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc34'
 --select @RecommendedColonoscopyFollowUpTimeMonthsQuestionID = QuestionID from tblQuestion where SetID = @DestProcedureSetID and QueCode = 'Proc35'
@@ -719,8 +729,8 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleDate2QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SampleResult2QuestionID,'',0)
 			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@StorageTempQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@BarcodeNumberQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@KitBatchNumberQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@BarcodeNumberQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@KitBatchNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForExclusionQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@CommentsQuestionID,'',0)
 			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@RecommendedColonoscopyFollowUpTimeMonthsQuestionID,'',0)
@@ -984,7 +994,7 @@ WHILE @@FETCH_STATUS = 0
 			delete from @QueAns
 			delete from @QueAns1
 
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@FamilynamekeyQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@FamilynamekeyQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@TitleQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GivenNameQuestionID,@GivenName,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@PreferredNameQuestionID,'',0)
@@ -995,8 +1005,8 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@AgeQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DeceasedQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfDeathQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@HighRiskPatientQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfOptoutQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@HighRiskPatientQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfOptoutQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@AddressUnknownQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@AddressLine1QuestionID,@AddressLine1,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@AddressLine2QuestionID,@AddressLine2,0)
@@ -1024,11 +1034,11 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfFilingLocationQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@CurrentSCOOPFolderQuestionID,@CurrentSCOOPFolder,0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@Comments1QuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForReferralOrReferralByQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForReferralOrReferralByQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@Comments2QuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForScoopEnrolmentQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfEnrollmentQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@WithdrawnByQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@WithdrawnByQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@ReasonForWithdrawalQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@DateOfWithdrawalQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SurnameQuestionID,@Surname,0)
@@ -1041,7 +1051,7 @@ WHILE @@FETCH_STATUS = 0
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SpecialistSuburbStatePostcodeQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SpecialistFaxNumberQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@SpecialistPhoneQuestionID,'',0)
-			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GlobalidQuestionID,'',0)
+			--INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GlobalidQuestionID,'',0)
 			INSERT INTO @QueAns(QueID, Value, Other) VALUES(@GPEmailQuestionID,'',0)
 
 			insert into @QueAns1 select * from @QueAns
